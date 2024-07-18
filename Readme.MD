@@ -30,7 +30,8 @@ run below command and configure the credentials.
 
 aws configure
 get the kubernetes config using below command
-aws eks update-kubeconfig --region us-east-1 --name 
+
+#aws eks update-kubeconfig --region us-east-1 --name 
 <YOUR-CLUSTER-NAME>
 
 Now you should be able to connect K8 cluster
