@@ -8,7 +8,7 @@ module "db" {
   sg_name = "Db"
 }
 
-module "ingress" {
+module "ingress" {  
   source = "git::https://github.com/sriramulasrinath/terraform-aws-security-grp.git?ref=main"
   project_name = var.project_name
   environment = var.environment
@@ -259,7 +259,7 @@ resource "aws_security_group_rule" "cluster_bastion" {
   from_port         = 443
   to_port           = 443
   protocol          = "tcp" #all protocols
-  source_security_group_id =  module.bastion.sg_id#where you are getting traffic from
+  source_security_group_id =  module.bastion.sg_id #where you are getting traffic from
   security_group_id = module.cluster.sg_id
 }
 # ###############################################################
@@ -291,7 +291,7 @@ resource "aws_security_group_rule" "cluster_node" {
   from_port         = 0
   to_port           = 65535
   protocol          = -1 #All traffic
-  source_security_group_id = module.node_sg_id#where you are getting traffic from
+  source_security_group_id = module.node.sg_id #where you are getting traffic from
   security_group_id = module.cluster.sg_id
 }
 
@@ -301,7 +301,7 @@ resource "aws_security_group_rule" "node_cluster" {
   from_port         = 0
   to_port           = 65535
   protocol          = -1 #All traffic
-  source_security_group_id = module.cluster_sg_id#where you are getting traffic from
+  source_security_group_id = module.cluster.sg_id#where you are getting traffic from
   security_group_id = module.node.sg_id
 }
 
@@ -321,7 +321,7 @@ resource "aws_security_group_rule" "db_node" {
   from_port         = 0
   to_port           = 65535
   protocol          = "tcp"
-  source_security_group_id = module.node_sg_id#where you are getting traffic from
+  source_security_group_id = module.node.sg_id#where you are getting traffic from
   security_group_id = module.db.sg_id
 }
 
@@ -331,7 +331,7 @@ resource "aws_security_group_rule" "db_bastion" {
   from_port         = 3306
   to_port           = 3306
   protocol          = "tcp"
-  source_security_group_id = module.bastion_sg_id#where you are getting traffic from
+  source_security_group_id = module.bastion.sg_id#where you are getting traffic from
   security_group_id = module.db.sg_id
 }
 
@@ -358,9 +358,9 @@ resource "aws_security_group_rule" "ingress_public_https" {
 # Ingress ALB accepting traffic from node
 resource "aws_security_group_rule" "node_ingress" {
   type              = "ingress"
-  from_port         = 0
-  to_port           = 65535
+  from_port         = 30000
+  to_port           = 32768
   protocol          = "tcp"
-  source_security_group_id = module.ingress_sg_id#where you are getting traffic from
+  source_security_group_id = module.ingress.sg_id#where you are getting traffic from
   security_group_id = module.node.sg_id
 }
