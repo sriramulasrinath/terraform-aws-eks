@@ -9,6 +9,7 @@ module "eks" {
 
   cluster_name    = "${var.project_name}-${var.environment}"
   cluster_version = "1.30"
+
   # it should be false in PROD environments
   cluster_endpoint_public_access  = true
 
@@ -49,6 +50,7 @@ module "eks" {
        # EKS takes AWS Linux 2 as it's OS to the nodes
        key_name = aws_key_pair.eks.key_name
     }
+
     # green = {
     #   min_size     = 2
     #   max_size     = 10
@@ -61,6 +63,19 @@ module "eks" {
     # EKS takes AWS Linux 2 as it's OS to the nodes
     #   key_name = aws_key_pair.eks.key_name
   }
-
   tags = var.common_tags
+}
+
+resource "aws_autoscaling_policy" "blue" {
+  name                   = "${var.project_name}-${var.environment}-blue-policy"
+  policy_type            = "TargetTrackingScaling"
+  autoscaling_group_name = module.eks.eks_managed_node_groups["blue"].resources.autoscaling_groups[0]
+
+  target_tracking_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+    target_value = 70
+  }
+  
 }

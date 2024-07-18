@@ -1,21 +1,4 @@
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Creating above infrastructure involves lot of steps, as maintained sequence we need to create
 
 VPC
