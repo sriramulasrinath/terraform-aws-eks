@@ -3,6 +3,8 @@ resource "aws_key_name" "eks" {
   #publuc_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFTOBOBCPGetwFG2ik3sR9lqg59BmRvyY9ljrXuLDJEi"
   public_key = file("~/.ssh/eks.pub")
 }
+
+
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.0"
@@ -30,7 +32,8 @@ module "eks" {
   create_node_security_group = false
   node_security_group_id     = local.node_sg_id
 
-
+  # the user which you used to create cluster will get admin access
+  enable_cluster_creator_admin_permissions = true
 
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
