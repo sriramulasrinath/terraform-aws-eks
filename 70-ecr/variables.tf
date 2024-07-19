@@ -9,9 +9,5 @@ variable "common_tags" {
     Project = "expense"
     Environment = "dev"
     Terraform = "true"
-    component = "ingress-alb"
   }
-}
-variable "zone_name" {
-  default = "srinath.online"
 }
