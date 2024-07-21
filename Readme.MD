@@ -1,14 +1,14 @@
 Creating above infrastructure involves lot of steps, as maintained sequence we need to create
 
-    VPC
-    All security groups and rules
-    Bastion Host, VPN
-    EKS
-    RDS
-    ACM for ingress
-    ALB as ingress controller
-    ECR repo to host images
-    CDN
+VPC
+All security groups and rules
+Bastion Host, VPN
+EKS
+RDS
+ACM for ingress
+ALB as ingress controller
+ECR repo to host images
+CDN
 Sequence
 (Required). create VPC first
 (Required). create SG after VPC
@@ -63,28 +63,3 @@ Helm install command for clusters with IRSA:
 helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=<cluster-name> --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
 check aws-load-balancer-controller is running in kube-system namespace.
 kubectl get pods -n kube-system
-About
-No description, website, or topics provided.
-Resources
- Readme
- Activity
- Custom properties
-Stars
- 1 star
-Watchers
- 0 watching
-Forks
- 4 forks
-Report repository
-Releases
-No releases published
-Packages
-No packages published
-Languages
-HCL
-93.8%
- 
-Shell
-6.2%
-Footer
-© 2024 GitHu
