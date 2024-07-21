@@ -23,12 +23,12 @@ Sequence
 Admin activities
 Bastion
 
-    SSH to bastion host
-    run below command and configure the credentials.
+SSH to bastion host
+run below command and configure the credentials.
 
-aws configure
+    aws configure
 
-    get the kubernetes config using below command
+get the kubernetes config using below command
 
     aws eks update-kubeconfig --region us-east-1 --name <YOUR-CLUSTER-NAME>
 
