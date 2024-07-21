@@ -11,15 +11,15 @@ Creating above infrastructure involves lot of steps, as maintained sequence we n
     CDN
 ----------------------------------------------------------
 Sequence
-(Required). create VPC first
-(Required). create SG after VPC
-(Required). create bastion host. It is used to connect RDS and EKS cluster.
-(Optional). VPN, same as bastion but a windows laptop can directly connect to VPN and get access of RDS and EKS.
-(Required). RDS. Create RDS because we don't create databases in Kubernetes.
-(Required). ACM. It is required to get SSL certificates for our ALB ingress controller.
-(Required). ingress ALB is required to expose our applications to outside world.
-(Required). ECR. We need to create ECR repo to host the application images.
-(Optional). CDN is optional. but good to have.
+    (Required). create VPC first
+    (Required). create SG after VPC
+    (Required). create bastion host. It is used to connect RDS and EKS cluster.
+    (Optional). VPN, same as bastion but a windows laptop can directly connect to VPN and get access of RDS and EKS.
+    (Required). RDS. Create RDS because we don't create databases in Kubernetes.
+    (Required). ACM. It is required to get SSL certificates for our ALB ingress controller.
+    (Required). ingress ALB is required to expose our applications to outside world.
+    (Required). ECR. We need to create ECR repo to host the application images.
+    (Optional). CDN is optional. but good to have.
 
 ----------------------------------------------------------
 Admin activities
