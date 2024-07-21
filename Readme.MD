@@ -30,40 +30,41 @@ aws configure
 
     get the kubernetes config using below command
 
-aws eks update-kubeconfig --region us-east-1 --name <YOUR-CLUSTER-NAME>
+    aws eks update-kubeconfig --region us-east-1 --name <YOUR-CLUSTER-NAME>
 
-    Now you should be able to connect K8 cluster
+Now you should be able to connect K8 cluster
 
-kubectl get nodes
+    kubectl get nodes
 
 RDS:
 
-    Connect to RDS using bastion host.
+Connect to RDS using bastion host.
 
-mysql -h <DB-R53-ADRESS> -u root -pExpenseApp1
+    mysql -h <DB-R53-ADRESS> -u root -pExpenseApp1
 
 We are creating schema while creating RDS. But table should be created.
 Refer backend.sql to create
 
-    Table
-    User
-    flush privileges
-    Ingress Controller
+Table
+User
+flush privileges
+Ingress Controller
 
-Ref: https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.8/
+    Ref: https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.8/
 
-    Connect to K8 cluster from bastion host.
-    Create an IAM OIDC provider. You can skip this step if you already have one for your cluster.
+Connect to K8 cluster from bastion host.
 
-eksctl utils associate-iam-oidc-provider --region us-east-1 --cluster <your-cluster-name> --approve
+Create an IAM OIDC provider. You can skip this step if you already have one for your cluster.
+
+    eksctl utils associate-iam-oidc-provider --region us-east-1 --cluster <your-cluster-name> --approve
 
 Download an IAM policy for the LBC using one of the following commands:
 
-curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs aws-load-balancer-controller/v2.8.1/docs/install/iam_policy.json
+    curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs aws-load-balancer-controller/v2.8.1/docs/install/iam_policy.json
 
 Create an IAM policy named AWSLoadBalancerControllerIAMPolicy. If you downloaded a different policy, replace iam-policy with the name of the policy that you downloaded.
 
-aws iam create-policy --policy-name AWSLoadBalancerControllerIAMPolicy --policy-document file://iam-policy.json
+    aws iam create-policy --policy-name AWSLoadBalancerControllerIAMPolicy --policy-document file://iam-policy.json
 
 Create a IAM role and ServiceAccount for the AWS Load Balancer controller, use the ARN from the step above
 
@@ -77,12 +78,12 @@ Create a IAM role and ServiceAccount for the AWS Load Balancer controller, use t
 
 Add the EKS chart repo to Helm
 
-helm repo add eks https://aws.github.io/eks-charts
+    helm repo add eks https://aws.github.io/eks-charts
 
 Helm install command for clusters with IRSA:
 
-helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=<cluster-name> --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
+    helm install aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=<cluster-name> --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller
 
 check aws-load-balancer-controller is running in kube-system namespace.
 
-kubectl get pods -n kube-system
+    kubectl get pods -n kube-system
